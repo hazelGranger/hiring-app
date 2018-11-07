@@ -13,6 +13,8 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 import reducer from './reducers'
 
+import './axios.config'
+
 const loggerMiddleware = createLogger({ collapsed: true })
 
 const store = createStore(

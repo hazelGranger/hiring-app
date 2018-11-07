@@ -4,6 +4,8 @@ const auth = (state={username: 'test', isAuth: false}, action) => {
       return {...state, isAuth: true}
     case "LOGOUT":
       return {...state, isAuth: false}
+    case "RENDER_USER_DATA":
+      return {...state, username: action.payload.username,age: action.payload.age}
     default:
       return state
   }

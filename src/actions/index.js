@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 
 export const add = () => ({
   type: "ADD"
@@ -32,3 +32,18 @@ export const login = () => ({
 export const logout = () => ({
   type: "LOGOUT"
 })
+
+export const renderUserData = (data) => ({
+  type: "RENDER_USER_DATA",
+  payload: data
+})
+
+export const getUserData = () => {
+  return (dispatch) => {
+    axios.get('/user').then(res => {
+      if (res.status === 200) {
+        dispatch(renderUserData(res.data))
+      }
+    })
+  }
+}

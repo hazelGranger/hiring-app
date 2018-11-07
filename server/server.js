@@ -10,7 +10,7 @@ mongoose.connection.on('connected', function(){
 
 const app = express()
 
-const port = 9001;
+const port = 9093;
 
 const User = mongoose.model('user', new mongoose.Schema({
   username: {
@@ -73,7 +73,17 @@ app.get('/data', function(req,res){
   //   name: 'Express',
   //   age: 7
   // })
-  User.findOne({age: 27}, function(err,doc){
+  User.find({age: 27}, function(err,doc){
+    res.json(doc)
+  })
+})
+
+app.get('/user', function(req,res){
+  // res.json({
+  //   name: 'Express',
+  //   age: 7
+  // })
+  User.findOne({username: 'Hazel'}, function(err,doc){
     res.json(doc)
   })
 })

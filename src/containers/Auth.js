@@ -4,16 +4,22 @@ import { connect } from 'react-redux'
 import { Button } from 'antd-mobile'
 import { Redirect } from 'react-router-dom'
 
-import { login } from '../actions'
+// import axios from 'axios'
+
+import { login, getUserData } from '../actions'
 
 class Auth extends Component{
 
+  componentDidMount() {
+    this.props.getUserData()
+  }
+
   render(){
-    console.log(this.props,"AUth");
+    // console.log(this.props,"AUth");
     const redirecToDashboard = <Redirect to="dashboard" />;
     const login = (
       <div>
-        { this.props.isAuth ? "asd" : null }
+        <p>welocome {this.props.auth.username}, {this.props.auth.age}</p>
         <p>You need login to experience the whole app</p>
         <Button type="primary" onClick={this.props.login}>login</Button>
       </div>
@@ -27,6 +33,7 @@ export default connect(
     auth: state.auth
   }),
   (dispatch) =>({
-    login: () => dispatch(login())
+    login: () => dispatch(login()),
+    getUserData: () => dispatch(getUserData())
   })
 )(Auth)
