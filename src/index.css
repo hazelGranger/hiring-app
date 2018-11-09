@@ -12,3 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.error-msg{
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+  padding: 0;
+}

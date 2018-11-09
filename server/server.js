@@ -1,27 +1,29 @@
-const express = require('express');
+const express = require('express')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
-const mongoose = require('mongoose');
-const DB_URL = 'mongodb://localhost:27017/imooc'
-
-mongoose.connect(DB_URL)
-mongoose.connection.on('connected', function(){
-  console.log("mongodb connected");
-})
+const userRoute = require('./user')
 
 const app = express()
 
+app.use(cookieParser()).use(bodyParser.json()).use('/user', userRoute)
+
 const port = 9093;
 
-const User = mongoose.model('user', new mongoose.Schema({
-  username: {
-    type: String,
-    require: true
-  },
-  age: {
-    type: Number,
-    require: true
-  }
-}))
+app.listen(port,function(){
+  console.log('Server is running at ' + port + " !");
+})
+
+// const User = mongoose.model('user', new mongoose.Schema({
+//   username: {
+//     type: String,
+//     require: true
+//   },
+//   age: {
+//     type: Number,
+//     require: true
+//   }
+// }))
 
 // create
 
@@ -58,38 +60,32 @@ const User = mongoose.model('user', new mongoose.Schema({
 //   }
 // })
 
+// app.get('/', function(req,res){
+//   res.send("On board!");
+// })
+//
+// app.get('/data', function(req,res){
+//   res.json({
+//     name: 'Express',
+//     age: 7
+//   })
+//   User.find({age: 27}, function(err,doc){
+//     res.json(doc)
+//   })
+// })
+
+// app.get('/user', function(req,res){
+//   // res.json({
+//   //   name: 'Express',
+//   //   age: 7
+//   // })
+//   User.findOne({username: 'Hazel'}, function(err,doc){
+//     res.json(doc)
+//   })
+// })
 
 
-app.listen(port,function(){
-  console.log('Server is running at ' + port + " !");
-})
-
-app.get('/', function(req,res){
-  res.send("On board!");
-})
-
-app.get('/data', function(req,res){
-  // res.json({
-  //   name: 'Express',
-  //   age: 7
-  // })
-  User.find({age: 27}, function(err,doc){
-    res.json(doc)
-  })
-})
-
-app.get('/user', function(req,res){
-  // res.json({
-  //   name: 'Express',
-  //   age: 7
-  // })
-  User.findOne({username: 'Hazel'}, function(err,doc){
-    res.json(doc)
-  })
-})
-
-
-
-app.get('/test', function(req,res){
-  res.send("<h2>hahaha</h2>")
-})
+//
+// app.get('/test', function(req,res){
+//   res.send("<h2>hahaha</h2>")
+// })

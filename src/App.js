@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 
@@ -7,25 +6,23 @@ import { Redux } from 'redux';
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import Dashboard from './containers/Dashboard'
-import Auth from './containers/Auth'
+import Login from './containers/login/login.js'
+import Register from './containers/register/register.js'
+import Boss from './containers/boss/boss.js'
 
-// const mapDispatchToProps = (bindActionCreators, dispatch) => ({
-//   actions: bindActionCreators(iconsActions, dispatch)
-// })
-
-// @connect(mapDispatchToProps, mapStateToProps)
+import AuthRoute from './components/AuthRoute/AuthRoute.js'
 
 class App extends Component {
   render(){
     return(
       <div>
         <Router>
-          <Switch>
-            <Route path='/login' component={Auth}></Route>
-            <Route path='/dashboard' component={Dashboard}></Route>
-            <Redirect to='/dashboard'></Redirect>
-          </Switch>
+          <div>
+            <AuthRoute></AuthRoute>
+            <Route path='/login' component={Login}></Route>
+            <Route path='/register' component={Register}></Route>
+            <Route path='/boss' component={Boss}></Route>
+          </div>
         </Router>
       </div>
     )
