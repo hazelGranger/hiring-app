@@ -19,3 +19,30 @@ code {
   margin-top: 10px;
   padding: 0;
 }
+
+.am-navbar{
+  position: relative;
+  top: 0;
+  width: 100%
+}
+
+.am-tab-bar{
+  position: fixed;
+  height: auto!important;
+  bottom: 0;
+  width: 100%;
+}
+
+ul{
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.user-card .am-card-header-content{
+  justify-content: space-between;
+}
+.user-card .am-card-header-content img{
+  width: 30px;
+  margin: 0;
+}

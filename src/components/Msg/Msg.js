@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 
-class Boss extends Component {
+class Msg extends Component {
   constructor(props) {
     super(props)
+    this.state={}
   }
-
   render(){
     return(
-      <div>Boss</div>
+      <div>Msg</div>
     )
   }
 }
 
-export default Boss
+export default Msg

@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import axios from 'axios'
 
 import { withRouter } from "react-router-dom"
+import { connect } from 'react-redux'
+
+import { loadUserInfo } from '../../redux/user.redux.js'
 
 @withRouter
 
@@ -20,6 +23,7 @@ class AuthRoute extends Component {
         // console.log(res.data,this.props)
         if (res.data.code === 0) {
           //with login info
+          this.props.loadUserInfo(res.data.data)
         }else{
           this.props.history.push("/login")
         }
@@ -31,4 +35,4 @@ class AuthRoute extends Component {
   }
 }
 
-export default AuthRoute
+export default connect(null,{loadUserInfo})(AuthRoute)

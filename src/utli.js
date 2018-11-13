@@ -1,11 +1,13 @@
 
-export function getRedirectPath({type,avatar}){
+export function getRedirectPath(userinfo){
   // user.type  /boss /applicant
   // user.avatar /bossinfo employee
-  console.log(type,'utli');
+  const {type, avatar} = userinfo
+
   let url = type==='boss'? '/boss' : '/applicant'
   if (!avatar) {
     url += 'info'
   }
+  
   return url
 }
