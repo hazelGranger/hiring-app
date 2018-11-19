@@ -21,9 +21,10 @@ code {
 }
 
 .am-navbar{
-  position: relative;
+  position: sticky;
   top: 0;
-  width: 100%
+  width: 100%;
+  z-index: 1;
 }
 
 .am-tab-bar{
@@ -45,4 +46,54 @@ ul{
 .user-card .am-card-header-content img{
   width: 30px;
   margin: 0;
+}
+
+.sendmsg{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.sendmsg .am-list-item .am-input-extra{
+  max-height: 40px;
+}
+
+.msgs{
+  margin-bottom: 50px;
+}
+
+#chat-page .am-list{
+  text-align: left;
+  background: transparent;
+}
+
+#chat-page .am-list-body::after,#chat-page .am-list-body::before{
+  display: none;
+}
+
+#chat-page .am-list .am-list-body,#chat-page .am-list .am-list-item{
+  background: transparent;
+}
+
+#chat-page .am-list-content{
+  text-align: inherit;
+}
+
+#chat-page .am-list.chat-me{
+  text-align: right;
+}
+
+#chat-page .am-list .am-list-item .am-list-line{
+  margin: 5px 30px;
+  background: #fff;
+  padding-left: 15px;
+  padding-right: 0;
+}
+
+#chat-page .am-list.chat-me .am-list-item .am-list-line{
+  padding-right: 15px;
+}
+
+#chat-page .am-list.chat-me .am-list-item .am-list-line{
+  background-color: #a8daff;
 }

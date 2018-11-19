@@ -4,6 +4,7 @@ const utils = require('utility')
 
 const models = require('./model')
 const User = models.getModel('user')
+const Chat = models.getModel('chat')
 
 const _userfilter = {'password': 0, '_v': 0}
 
@@ -14,6 +15,28 @@ Router.get('/list', function (req, res) {
       return res.json({code: 1, msg: err})
     }else {
       return res.json({code: 0, data: doc})
+    }
+  })
+})
+
+Router.get('/getmsglist', function(req, res){
+  const user = req.cookies.userid,
+        users = {}
+  User.find({},function (err, userdoc) {
+    if (!err) {
+
+      userdoc.forEach(u=>{
+        users[u._id] = {username: u.username, avatar: u.avatar}
+      })
+
+      console.log(req.cookies,user);
+
+      Chat.find({'$or':[{from:user},{to:user}]},function (err, doc) {
+        if(!err){
+          console.log(doc);
+          res.json({code: 0, msgs: doc, users: users})
+        }
+      })
     }
   })
 })

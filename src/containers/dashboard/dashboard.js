@@ -11,10 +11,17 @@ import UserCenter from '../../components/UserCenter/UserCenter'
 
 import NavTabBar from '../../components/navtabbar/navtabbar'
 
+import { getMsgList, receiveMsg } from '../../redux/chat.redux'
+
 
 class Dashboard extends Component {
+  componentDidMount(){
+    if (!this.props.chat.chatmsg.length) {
+      this.props.getMsgList()
+      this.props.receiveMsg()
+    }
+  }
   render(){
-    console.log("/dashboard");
     const { pathname } = this.props.location,
           user = this.props.user
     const tabList = [
@@ -51,17 +58,18 @@ class Dashboard extends Component {
     ]
     return(
       <div>
-        <NavBar mode="dark">{tabList.find(v=>v.path===pathname).title}</NavBar>
-        <div>
-          <Switch>
-            {
-              tabList.map(v=>(
-                <Route key={v.text} path={v.path} component={v.component}></Route>
-              ))
-            }
-          </Switch>
-        </div>
-        <NavTabBar data={tabList} />
+        <NavBar mode="dark"
+        >{tabList.find(v=>v.path===pathname).title}</NavBar>
+          <div>
+            <Switch>
+              {
+                tabList.map(v=>(
+                  <Route key={v.text} path={v.path} component={v.component}></Route>
+                ))
+              }
+            </Switch>
+          </div>
+        <NavTabBar data={tabList} unread={this.props.chat.unread} />
       </div>
     )
   }
@@ -69,5 +77,5 @@ class Dashboard extends Component {
 
 export default connect(
   state=>state,
-  null
+  { getMsgList, receiveMsg }
 )(Dashboard)

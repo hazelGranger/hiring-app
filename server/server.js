@@ -3,14 +3,47 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
 const userRoute = require('./user')
+const model = require('./model')
+const Chat = model.getModel('chat')
 
 const app = express()
+
+
+// work with Express
+
+const server = require('http').Server(app)
+
+const io = require('socket.io')(server)
+
+app.get('/removemsg', function(req, res){
+  Chat.remove({}, function(err,doc){
+    res.json(doc)
+  })
+})
+
+app.get('/msgs', function(req, res){
+  Chat.find({}, function(err,doc){
+    res.json(doc)
+  })
+})
+
+io.on('connection',function(socket){
+  socket.on('sendMsg', function (data) {
+    const { from, to, msg } = data
+    const chatid = [from,to].sort().join('_')
+    Chat.create({chatid, from, to, content: msg}, function(err, doc){
+      if (!err) {
+        io.emit('receiveMsg', Object.assign({},doc._doc))
+      }
+    })
+  })
+})
 
 app.use(cookieParser()).use(bodyParser.json()).use('/user', userRoute)
 
 const port = 9093;
 
-app.listen(port,function(){
+server.listen(port,function(){
   console.log('Server is running at ' + port + " !");
 })
 

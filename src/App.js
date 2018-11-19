@@ -3,13 +3,15 @@ import './App.css';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Login from './containers/login/login.js'
-import Register from './containers/register/register.js'
-import BossInfo from './containers/bossinfo/bossinfo.js'
-import ApplicantInfo from './containers/applicantinfo/applicantinfo.js'
-import Dashboard from './containers/dashboard/dashboard.js'
+import Login from './containers/login/login'
+import Register from './containers/register/register'
+import BossInfo from './containers/bossinfo/bossinfo'
+import ApplicantInfo from './containers/applicantinfo/applicantinfo'
+import Dashboard from './containers/dashboard/dashboard'
+import Chat from './components/chat/chat'
 
-import AuthRoute from './components/AuthRoute/AuthRoute.js'
+
+import AuthRoute from './components/AuthRoute/AuthRoute'
 
 class App extends Component {
   render(){
@@ -23,6 +25,7 @@ class App extends Component {
               <Route path='/register' component={Register}></Route>
               <Route path="/applicantinfo" component={ApplicantInfo}></Route>
               <Route path="/bossinfo" component={BossInfo}></Route>
+              <Route path="/chat/:user" component={Chat}></Route>
               <Route component={Dashboard}></Route>
             </Switch>
           </div>
