@@ -41,6 +41,22 @@ Router.get('/getmsglist', function(req, res){
   })
 })
 
+Router.post('/readmsg', function(req, res){
+  const { targetId } = req.body
+  const userId = req.cookies.userid
+  Chat.update(
+    {from: targetId, to: userId},
+    {'$set': {read: true}},
+    {'multi': true},
+    function (err, doc) {
+    if (!err) {
+      console.log(doc);
+      return res.json({code: 0, num: doc.nModified})
+    }
+    return res.json({code: 1, msg: err})
+  })
+})
+
 // Router.get('/remove', function(req, res){
 //   User.remove({}, function(err,doc){
 //     res.json(doc)
