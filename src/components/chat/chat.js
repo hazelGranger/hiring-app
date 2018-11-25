@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import io from 'socket.io-client'
 import { List, InputItem, Button, NavBar, Icon } from 'antd-mobile'
 import { connect } from 'react-redux'
 
 import { getMsgList, sendMsg, receiveMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../utli'
-
-const socket = io('ws://localhost:9093')
 
 class Chat extends Component {
   constructor(props){
