@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux'
 
 import { List, Badge } from 'antd-mobile'
 
-
 class Msg extends Component {
+
   constructor(props) {
     super(props)
-    this.state={}
+    this.state = {}
   }
+
   getLast(arr){
     return arr[arr.length-1]
   }
+
   render(){
     let msgGroup = {}
     this.props.chat.chatmsg.forEach(m=>{
@@ -26,40 +27,39 @@ class Msg extends Component {
       return time_b-time_a
     })
 
-    console.log(chatList,'chatList');
+    console.log(chatList,'chatList')
 
     const Item = List.Item,
           Brief = List.Item.Brief
 
     return(
       <div>
-        {
-          chatList.map((v,i)=>{
-            console.log(v);
-            const lastMsg = this.getLast(v).content
-            const targetId = v[0].from===this.props.user._id?v[0].to:v[0].from
-            const username = this.props.chat.users[targetId].username
-            const avatar = this.props.chat.users[targetId].avatar
-            const unreadNum = v.filter(m=>!m.read&&m.to===this.props.user._id).length
-            return(
-              <List key={i}>
-                <Item
-                  thumb={require(`../AvatarSelector/img/${avatar}.png`)}
-                  extra={<Badge text={ unreadNum } />}
-                  arrow='horizontal'
-                  onClick={()=>{
-                    this.props.history.push(`/chat/${targetId}`)
-                  }}
-                >
-                  {username}
-                  <Brief>
-                    { lastMsg }
-                  </Brief>
-                </Item>
-              </List>
-            )
-          })
-        }
+          {
+            chatList.map((v,i)=>{
+              const lastMsg = this.getLast(v).content
+              const targetId = v[0].from===this.props.user._id?v[0].to:v[0].from
+              const username = this.props.chat.users[targetId].username
+              const avatar = this.props.chat.users[targetId].avatar
+              const unreadNum = v.filter(m=>!m.read&&m.to===this.props.user._id).length
+              return(
+                <List key={i}>
+                  <Item
+                    thumb={require(`../AvatarSelector/img/${avatar}.png`)}
+                    extra={<Badge text={ unreadNum } />}
+                    arrow='horizontal'
+                    onClick={()=>{
+                      this.props.history.push(`/chat/${targetId}`)
+                    }}
+                  >
+                    {username}
+                    <Brief>
+                      { lastMsg }
+                    </Brief>
+                  </Item>
+                </List>
+              )
+            })
+          }
       </div>
     )
   }

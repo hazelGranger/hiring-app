@@ -9,16 +9,16 @@ import { logout } from '../../redux/user.redux'
 
 class UserCenter extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
     this.handleLogout = this.handleLogout.bind(this)
   }
 
-  handleLogout(){
-    console.log('lall');
+  handleLogout() {
+    console.log('lall')
     Modal.alert(
       'Logout',
-      'Are you sure?',[
+      'Are you sure?', [
         {
           text: 'cancel',
           onPress: ()=>console.log('cancel')
@@ -34,32 +34,32 @@ class UserCenter extends Component {
     )
   }
 
-  render(){
-    const {username, jobTitle, desc, salary, company, avatar, redirectTo,type} = this.props
-    return username?(
+  render() {
+    const { username, jobTitle, desc, salary, company, avatar, redirectTo, type } = this.props.user
+    return username ? (
       <div>
         <Result
-					img={<img src={require(`../AvatarSelector/img/${avatar}.png`)} style={{width:50}} alt="" />}
-					title={username}
-					message={type==='boss'?company:null}
-				/>
+          img={<img src={require(`../AvatarSelector/img/${avatar}.png`)} style={{ width: 50 }} alt="" />}
+          title={username}
+          message={type === 'boss' ? company : null}
+        />
         <List renderHeader={()=>'Intro'}>
           <List.Item multipleLine>
             {jobTitle}
-            {desc.split('\n').map((d,i)=>(
-              <List.Item.Brief key={i}>{d}</List.Item.Brief>
+            {desc.split('\n').map(d => (
+              <List.Item.Brief key={d}>{d}</List.Item.Brief>
             ))}
-            {salary?<List.Item.Brief>{salary}</List.Item.Brief>:null}
+            {salary ? <List.Item.Brief>{salary}</List.Item.Brief> : null}
           </List.Item>
         </List>
-        <WhiteSpace></WhiteSpace>
-        <Button onClick={this.handleLogout} style={{color: '#108ee9'}}>Logout</Button>
+        <WhiteSpace />
+        <Button onClick={this.handleLogout} style={{ color: '#108ee9' }}>Logout</Button>
       </div>
-    ):<Redirect to={redirectTo}></Redirect>
+    ) : <Redirect to={redirectTo} />
   }
 }
 
 export default connect(
-  state=>state.user,
+  state=>state,
   { logout }
 )(UserCenter)

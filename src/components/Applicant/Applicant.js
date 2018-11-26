@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import UserCard from '../../components/UserCard/UserCard.js'
-import { getUserList } from '../../redux/chatuser.redux.js'
+import UserCard from '../../components/UserCard/UserCard'
+import { getUserList } from '../../redux/chatuser.redux'
 
 
 class Applicant extends Component {

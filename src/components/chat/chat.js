@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { List, InputItem, Button, NavBar, Icon } from 'antd-mobile'
 import { connect } from 'react-redux'
+import QueueAnim from 'rc-queue-anim'
 
 import { getMsgList, sendMsg, receiveMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../utli'
@@ -27,7 +28,7 @@ class Chat extends Component {
     const from = this.props.user._id,
           to = this.props.match.params.user,
           msg = this.state.inputText
-    console.log(from,to,msg);
+    console.log(from,to,msg)
     this.props.sendMsg({from, to, msg})
     this.setState({
       inputText: ''
@@ -52,27 +53,29 @@ class Chat extends Component {
           {users[chatWithUserid].username}
         </NavBar>
         <div className='msgs'>
-          {chatmsgs.map((m,i) => {
-            const avatar = require(`../AvatarSelector/img/${users[m.from].avatar}.png`)
-            return m.from === chatWithUserid ? (
-              <List key={m._id}>
-                <List.Item
-                  thumb={avatar}
-                >
-                  {m.content}
-                </List.Item>
-              </List>
-            ):(
-              <List key={m._id} className='chat-me'>
-                <List.Item
-                  extra={<img src={avatar} alt='avatar' />}
-                >
-                  {m.content}
-                </List.Item>
-              </List>
-              )
-            }
-          )}
+          <QueueAnim delay={300}>
+            {chatmsgs.map((m,i) => {
+              const avatar = require(`../AvatarSelector/img/${users[m.from].avatar}.png`)
+              return m.from === chatWithUserid ? (
+                <List key={m._id}>
+                  <List.Item
+                    thumb={avatar}
+                  >
+                    {m.content}
+                  </List.Item>
+                </List>
+              ):(
+                <List key={m._id} className='chat-me'>
+                  <List.Item
+                    extra={<img src={avatar} alt='avatar' />}
+                  >
+                    {m.content}
+                  </List.Item>
+                </List>
+                )
+              }
+            )}
+          </QueueAnim>
         </div>
         <div className='sendmsg'>
           <InputItem

@@ -60,6 +60,11 @@ ul{
 
 .msgs{
   margin-bottom: 50px;
+  overflow: hidden;
+}
+
+.route-container{
+  overflow: hidden;
 }
 
 #chat-page .am-list{

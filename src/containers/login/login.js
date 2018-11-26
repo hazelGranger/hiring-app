@@ -35,7 +35,7 @@ class Login extends Component{
   }
 
   render(){
-    const msg = this.props.msg;
+    const msg = this.props.msg
     return(
       <div>Login
         <Logo />

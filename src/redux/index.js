@@ -7,5 +7,5 @@ import chat from './chat.redux'
 export default combineReducers({
   user,
   chatuser,
-  chat
+  chat,
 })

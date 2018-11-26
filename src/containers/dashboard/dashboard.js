@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { NavBar } from 'antd-mobile'
+import QueueAnim from 'rc-queue-anim'
 
 import Boss from '../../components/Boss/Boss'
 import Applicant from '../../components/Applicant/Applicant'
@@ -15,22 +17,22 @@ import { getMsgList, receiveMsg } from '../../redux/chat.redux'
 
 
 class Dashboard extends Component {
-  componentDidMount(){
+  componentDidMount() {
     if (!this.props.chat.chatmsg.length) {
       this.props.getMsgList()
       this.props.receiveMsg()
     }
   }
-  render(){
+
+  render() {
     const { pathname } = this.props.location,
-          user = this.props.user
-    const tabList = [
-      {
+      { user } = this.props,
+      tabList = [{
         path: '/boss',
         text: 'applicants',
         icon: 'boss',
         title: 'applicants list',
-        hide: user.type==='applicant',
+        hide: user.type === 'applicant',
         component: Applicant
       },
       {
@@ -38,7 +40,7 @@ class Dashboard extends Component {
         text: 'boss',
         icon: 'job',
         title: 'bosses list',
-        hide: user.type==='boss',
+        hide: user.type === 'boss',
         component: Boss
       },
       {
@@ -55,24 +57,33 @@ class Dashboard extends Component {
         title: 'User Center',
         component: UserCenter
       }
-    ]
-    return(
+      ]
+    return (
       <div>
-        <NavBar mode="dark"
-        >{tabList.find(v=>v.path===pathname).title}</NavBar>
-          <div>
-            <Switch>
-              {
-                tabList.map(v=>(
+        <NavBar mode="dark">{tabList.find(v=>v.path === pathname).title}</NavBar>
+        <div className="route-container">
+            <QueueAnim delay={300} type="scale">
+            {
+              tabList.map(v=>(
+                v.path === pathname ? (
                   <Route key={v.text} path={v.path} component={v.component}></Route>
-                ))
-              }
-            </Switch>
-          </div>
+                ) : null
+              ))
+            }
+            </QueueAnim>
+        </div>
         <NavTabBar data={tabList} unread={this.props.chat.unread} />
       </div>
     )
   }
+}
+
+Dashboard.propTypes = {
+  chat: PropTypes.object,
+  getMsgList: PropTypes.func,
+  receiveMsg: PropTypes.func,
+  location: PropTypes.object,
+  user: PropTypes.object
 }
 
 export default connect(

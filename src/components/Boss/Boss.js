@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import UserCard from '../../components/UserCard/UserCard.js'
-import { getUserList } from '../../redux/chatuser.redux.js'
+import UserCard from '../../components/UserCard/UserCard'
+import { getUserList } from '../../redux/chatuser.redux'
 
 
 class Boss extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUserList('boss')
   }
-  render(){
-    console.log(this.props);
+
+  render() {
+    console.log(this.props)
     const { userList } = this.props
-    return(
+    return (
       <div>
         { userList.map(u=>(
-            <UserCard key={u.username} userdata={u} />
+          <UserCard key={u.username} userdata={u} />
         ))}
       </div>
     )

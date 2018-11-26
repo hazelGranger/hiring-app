@@ -14,52 +14,52 @@ const initalState = {
   type: '',
   isAuth: false,
   msg: '',
-  redirectTo: ''
+  redirectTo: '',
 }
 
-function errorMsg(msg){
+function errorMsg(msg) {
   return { msg, type: ERROR_MSG }
 }
 
-const authSuccess = (userinfo)=> {
-  const {password, ...data} = userinfo
-  return {type: AUTH_SUCCESS, payload: data}
+const authSuccess = (userinfo) => {
+  const { password, ...data } = userinfo
+  return { type: AUTH_SUCCESS, payload: data }
 }
 
 export const loadUserInfo = (data) =>({
   type: LOAD_USERINFO, payload: data
 })
 
-export function register({username, password, repeatPassword, type}){
-  if (!username||!password||!type) {
+export function register({ username, password, repeatPassword, type }) {
+  if (!username || !password || !type) {
     return errorMsg('username&password is required!')
   }
-  if (password!==repeatPassword) {
+  if (password !== repeatPassword) {
     return errorMsg('two passwords should be same')
   }
 
   return (dispatch) =>{
-    axios.post('/user/register',{username,password,type}).then(res=>{
+    axios.post('/user/register', { username, password, type }).then(res => {
 
-      if (res.status===200&&res.data.code===0) {
+      if (res.status === 200 && res.data.code === 0) {
         dispatch(authSuccess(res.data.data))
-      }else{
+      } else {
         dispatch(errorMsg(res.data.msg))
       }
     })
   }
 }
 
-export function login({username, password}) {
-  if (!username||!password) {
+export function login({ username, password }) {
+  if (!username || !password) {
     return errorMsg('username&password is required!')
   }
   return (dispatch) => {
-    axios.post('/user/login', {username, password}).then(res=>{
-      if (res.status===200&&res.data.code===0) {
-        console.log(res.data);
+    axios.post('/user/login', { username, password }).then(res=>{
+      if (res.status === 200 && res.data.code === 0) {
+        console.log(res.data)
         dispatch(authSuccess(res.data.data))
-      }else {
+      } else {
         dispatch(errorMsg(res.data.msg))
       }
     })
@@ -85,7 +85,7 @@ export function updateInfo(userinfo) {
 
 // reducer
 const user = (state=initalState, action) => {
-  console.log(action.type, "action");
+  console.log(action.type, "action")
   switch (action.type) {
     case ERROR_MSG:
       return {...state, msg: action.msg, isAuth: false}

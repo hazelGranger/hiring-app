@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {Grid, List} from 'antd-mobile'
+import { Grid, List } from 'antd-mobile'
 import PropTypes from 'prop-types'
 
 import './avatarselector.css'
@@ -12,46 +12,46 @@ class AvatarSelector extends Component {
     this.state = {}
   }
 
-  static propTypes = {
-    selectAvatar: PropTypes.func.isRequired
-  }
-
-  selectUserAvatar(ele){
+  selectUserAvatar(ele) {
     this.setState({
       icon: ele.icon
     })
     this.props.selectAvatar(ele.text)
   }
 
-  render(){
+  render() {
     const avatarNames = 'boy,girl,man,woman,bull,chick,crab,hedgehog,hippopotamus,koala,lemur,pig,tiger,zebra'
     const avatarList = avatarNames.split(',').map(v=>({
       icon: require(`./img/${v}.png`),
       text: v
     }))
 
-    const gridHeader = this.state.icon?(
-      <div style={{display: 'flex', alignItems: 'center'}}>
+    const gridHeader = this.state.icon ? (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <span>selected avatar</span>
-        <img style={{width:30}} src={this.state.icon} alt=""/>
+        <img style={{ width: 30 }} src={this.state.icon} alt="" />
       </div>
-    ):(
+    ) : (
       <div>please select an avatar</div>
     )
 
-    return(
+    return (
       <div>
-        <List renderHeader={()=>gridHeader}>
+        <List renderHeader={() => gridHeader}>
           <Grid
             data={avatarList}
             columnNum={5}
             onClick={ele=>this.selectUserAvatar(ele)}
-          ></Grid>
+          />
         </List>
       </div>
     )
   }
 
+}
+
+AvatarSelector.propTypes = {
+  selectAvatar: PropTypes.func.isRequired
 }
 
 export default AvatarSelector
