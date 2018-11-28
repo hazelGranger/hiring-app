@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { NavBar } from 'antd-mobile'
@@ -57,19 +57,16 @@ class Dashboard extends Component {
         title: 'User Center',
         component: UserCenter
       }
-      ]
-    return (
+    ]
+    const page = tabList.find(v=>v.path === pathname)
+    return !page ? (
+      <Redirect to='/msg' />
+    ) : (
       <div>
-        <NavBar mode="dark">{tabList.find(v=>v.path === pathname).title}</NavBar>
+        <NavBar mode="dark">{page.title}</NavBar>
         <div className="route-container">
             <QueueAnim delay={300} type="scale">
-            {
-              tabList.map(v=>(
-                v.path === pathname ? (
-                  <Route key={v.text} path={v.path} component={v.component}></Route>
-                ) : null
-              ))
-            }
+              <Route key={page.text} path={page.path} component={page.component}></Route>
             </QueueAnim>
         </div>
         <NavTabBar data={tabList} unread={this.props.chat.unread} />
