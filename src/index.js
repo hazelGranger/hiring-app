@@ -4,6 +4,7 @@ import './index.css'
 
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -26,7 +27,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 )

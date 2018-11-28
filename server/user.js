@@ -29,11 +29,11 @@ Router.get('/getmsglist', function(req, res){
         users[u._id] = {username: u.username, avatar: u.avatar}
       })
 
-      console.log(req.cookies,user);
+      // console.log(req.cookies,user);
 
       Chat.find({'$or':[{from:user},{to:user}]},function (err, doc) {
         if(!err){
-          console.log(doc);
+          // console.log(doc);
           res.json({code: 0, msgs: doc, users: users})
         }
       })
@@ -50,7 +50,7 @@ Router.post('/readmsg', function(req, res){
     {'multi': true},
     function (err, doc) {
     if (!err) {
-      console.log(doc);
+      // console.log(doc);
       return res.json({code: 0, num: doc.nModified})
     }
     return res.json({code: 1, msg: err})
@@ -123,7 +123,7 @@ Router.post('/update', function(req, res){
   }
   const body = req.body
   User.findByIdAndUpdate(userid, body, function(err, doc){
-    console.log(body, "body");
+    // console.log(body, "body");
     if (err) {
       return res.json({code:1, msg:"Server Error!"})
     }else{

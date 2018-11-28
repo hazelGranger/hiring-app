@@ -1,19 +1,19 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import path from 'path'
+import React from 'react'
 
-const userRoute = require('./user')
-const model = require('./model')
+import userRoute from './user'
+import model from './model'
 const Chat = model.getModel('chat')
 
 const app = express()
 
-
-// work with Express
-
 const server = require('http').Server(app)
 
 const io = require('socket.io')(server)
+
 
 app.get('/removemsg', function(req, res){
   Chat.remove({}, function(err,doc){
@@ -39,8 +39,18 @@ io.on('connection',function(socket){
   })
 })
 
-app.use(cookieParser()).use(bodyParser.json()).use('/user', userRoute)
-
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use('/user', userRoute)
+// app.use(function (req, res, next) {
+//   if (req.url.startsWith('/user/') || req.url.startsWith('/static/')) {
+//     return next()
+//   }
+//   // console.log(path.resolve('build/'), 'path');
+//   return res.send(renderToStaticMarkup(Test()))
+//   //return res.sendFile(path.resolve('build/index.html'))
+// })
+// app.use('/',express.static(path.resolve('build')))
 const port = 9093;
 
 server.listen(port,function(){
