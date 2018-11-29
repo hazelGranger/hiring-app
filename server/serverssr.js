@@ -71,27 +71,30 @@ app.use(function(req, res, next){
     </Provider>
   )
 
+  const stylesKeys = Object.keys(staticPath).filter(v=>v.endsWith('.css'))
+  const jsKeys = Object.keys(staticPath).filter(v=>v.endsWith('.js'))
+
+  const styles = stylesKeys.reduce((s,v)=> s + (`<link rel="stylesheet" href="${staticPath[v]}">`), '')
+  const jsFiles = jsKeys.reduce((s,v)=> s + (`<script src="${staticPath[v]}"></script>`), '')
+  console.log(styles);
+
   const page = `<!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="theme-color" content="#000000">
-      <title></title>
-      <link rel="stylesheet" href="${staticPath['main.css']}">
-      <link rel="stylesheet" href="${staticPath['chunk.css']}">
+      <title>React App</title>
+      ${styles}
     </head>
     <body>
       <noscript>
         You need to enable JavaScript to run this app.
       </noscript>
       <div id="root">${domNodes}</div>
-      <script src="${staticPath['chunk.js']}"></script>
-      <script src="${staticPath['main.js']}"></script>
-      <script src="${staticPath['runtime~main.js']}"></script>
+      ${jsFiles}
     </body>
-  </html>
-`
+  </html>`
 
   return res.send(page)
 })
