@@ -18,6 +18,7 @@ class Register extends Component{
       type: "applicant"
     }
     this.handleRegister = this.handleRegister.bind(this)
+    this.toLogin = this.toLogin.bind(this)
   }
 
   handleFormChange(key, value) {
@@ -31,12 +32,16 @@ class Register extends Component{
     //console.log(this.state)
   }
 
+  toLogin() {
+    this.props.history.push('/login')
+  }
+
 
   render(){
     const RadioItem = Radio.RadioItem
     const msg = this.props.msg
     return(
-      <div>Register
+      <div>
         { this.props.redirectTo?<Redirect to={this.props.redirectTo} />:null}
         <Logo />
         <WingBlank>
@@ -62,6 +67,8 @@ class Register extends Component{
             <WhiteSpace />
             <Button type="primary"
               onClick={this.handleRegister}>Register</Button>
+            <Button type="ghost" style={{marginTop: '15px'}}
+              onClick={this.toLogin}>I have an account</Button>
           </List>
         </WingBlank>
       </div>
